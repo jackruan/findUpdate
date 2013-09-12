@@ -6,5 +6,5 @@ import java.util.List;
 import com.jack.findUpdate.po.ModifyPath;
 
 public interface DataCollect {
-	List<ModifyPath> findModifyPathsFromDate(Date from, Date to, String path)throws Exception;
+	List<ModifyPath> findModifyPathsFromVersion(int beginVersion, int endVersion, String path)throws Exception;
 }

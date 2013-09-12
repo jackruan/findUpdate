@@ -10,7 +10,7 @@ import com.jack.findUpdate.util.PropertiesUtil;
 public class SystemPara {
 	
 	private static final String propertiesPath = "findUpdate.ini";
-	private static Map<String, String> data = new HashMap<String, String>();
+	private static Map<String, String> data;
 	
 	static{
 		try {
@@ -19,6 +19,9 @@ public class SystemPara {
 			e.printStackTrace();
 		} catch (IOException e) {
 			e.printStackTrace();
+		}
+		if(data==null){
+			data = new HashMap<String, String>();
 		}
 	}
 	

@@ -1,8 +1,6 @@
 package com.jack.findUpdate.dataCollect;
 
-import java.text.Format;
-import java.text.SimpleDateFormat;
-import java.util.Date;
+import java.text.MessageFormat;
 import java.util.List;
 
 import com.jack.findUpdate.SystemPara;
@@ -16,23 +14,30 @@ import com.jack.findUpdate.util.CmdUtil;
  */
 public class SVNCollect implements DataCollect{
 
-	private SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");
-	private String cmd = "{0} log -v -r {1}:{2} {3}";
+	private String cmd = "{0} diff -r {1}:{2} --summarize --xml {3}";
 	
 	@Override
-	public List<ModifyPath> findModifyPathsFromDate(Date from, Date to, String path) throws Exception {
+	public List<ModifyPath> findModifyPathsFromVersion(int beginVersion, int endVersion, String path) throws Exception {
 		String toStr;
-		if(to==null){
+		if(endVersion==0){
 			toStr = "HEAD";
 		}else{
-			toStr = sdf.format(to);
+			toStr = endVersion + "";
 		}
-		String fromStr = sdf.format(from);
-		String ret = CmdUtil.exeCmd(String.format(cmd, SystemPara.getProperties(SystemPara.Type.svnPath), fromStr, toStr, path));
+		String svnPath = SystemPara.getProperties(SystemPara.Type.svnPath);
+		if(svnPath==null){
+			svnPath = "H:/svn-win32-1.6.6/bin/svn";
+		}
+		String ret = CmdUtil.exeCmd(MessageFormat.format(cmd, svnPath, beginVersion, toStr, path));
 		if(ret==null){
 			throw new Exception("svncollect execmd error");
 		}
+		System.out.println(ret);
 		return null;
+	}
+	
+	public static void main(String[] args) throws Exception {
+		new SVNCollect().findModifyPathsFromVersion(2, 3, "F:/testsvn/test");
 	}
 
 }
