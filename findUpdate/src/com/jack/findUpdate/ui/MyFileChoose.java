@@ -6,6 +6,8 @@
 
 package com.jack.findUpdate.ui;
 
+import java.io.File;
+
 import javax.swing.JFileChooser;
 import javax.swing.JFrame;
 import javax.swing.UIManager;
@@ -35,7 +37,6 @@ public class MyFileChoose extends javax.swing.JPanel {
 		chooseBtn = new javax.swing.JButton();
 
 		choosePathTxt.setEditable(false);
-		choosePathTxt.setText("jTextField1");
 
 		chooseBtn.setText("\u6d4f\u89c8");
 		chooseBtn.addActionListener(new java.awt.event.ActionListener() {
@@ -78,10 +79,29 @@ public class MyFileChoose extends javax.swing.JPanel {
 
 	private void chooseBtnActionPerformed(java.awt.event.ActionEvent evt) {
 		JFileChooser fc = new JFileChooser();
+		if(chooseDir){
+			fc.setFileSelectionMode(JFileChooser.DIRECTORIES_ONLY);
+		}
+		if(choosePathTxt.getText()!=null && choosePathTxt.getText().trim().length()>0){
+			fc.setCurrentDirectory(new File(choosePathTxt.getText().trim()));
+		}
 		int result = fc.showOpenDialog(null);
 		if (result == JFileChooser.APPROVE_OPTION) {
 			choosePathTxt.setText(fc.getSelectedFile().getAbsolutePath());
 		}
+	}
+	
+	private boolean chooseDir = true;
+	public void setChooseDir(boolean chooseDir){
+		this.chooseDir = chooseDir;
+	}
+
+	public String getChoosePath() {
+		return choosePathTxt.getText();
+	}
+	
+	public void setChoosePath(String txt){
+		choosePathTxt.setText(txt);
 	}
 
 	public static void main(String[] args) throws ClassNotFoundException,

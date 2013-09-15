@@ -15,7 +15,7 @@ public class Start {
 			
 			@Override
 			public void run() {
-				JFrame j = new JFrame("´ò°ü");
+				JFrame j = new JFrame("findUpate");
 //				j.setSize(800, 200);
 				j.add(new MainPanel());
 				j.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
@@ -26,4 +26,5 @@ public class Start {
 		});
 
 	}
+	
 }

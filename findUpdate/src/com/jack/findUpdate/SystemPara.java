@@ -26,14 +26,36 @@ public class SystemPara {
 	}
 	
 	public static enum Type{
-		svnPath
+		startVersion,
+		endVersion,
+		toolType,
+		toolPath,
+		username,
+		password,
+		projectPath,
+		buildPath,
+		appType
 	}
 	
-	public static String getProperties(Type type) throws Exception{
+	public static String getProperties(Type type){
 		return data.get(type.toString());
 	}
 	
+	public static String getProperties(Type type, String defaultValue){
+		String value = getProperties(type);
+		if(value==null){
+			return defaultValue;
+		}else{
+			return value;
+		}
+	}
+
+	
 	public static void setProperties(Type type, String value){
 		data.put(type.toString(), value);
+	}
+	
+	public static void saveParas() throws FileNotFoundException, IOException{
+		PropertiesUtil.saveProperties(propertiesPath, data);
 	}
 }

@@ -1,10 +1,10 @@
 package com.jack.findUpdate.dataCollect;
 
 public class DataCollectFactory {
-	public static DataCollect getCollect(String type){
-		if("svn".equals(type)){
+	public static DataCollect getCollect(String type)throws Exception{
+		if("svn".equals(type.toLowerCase())){
 			return new SVNCollect();
 		}
-		return null;
+		throw new Exception(type + "not implement");
 	}
 }
