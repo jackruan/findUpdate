@@ -7,8 +7,14 @@ import java.io.FileInputStream;
 import java.io.FileOutputStream;
 import java.io.IOException;
 
+import org.apache.log4j.Logger;
+
 public class FileUtil {
+	
+	private static Logger log = Logger.getLogger(FileUtil.class);
+	
     public static void copyFile(File sourceFile, File targetFile) throws IOException{
+    	log.info("copyFile : sourceFile=" + sourceFile + "&targetFile=" + targetFile);
         BufferedInputStream inBuff = null;
         BufferedOutputStream outBuff = null;
         try {

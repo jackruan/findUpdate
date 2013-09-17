@@ -444,10 +444,15 @@ public class MainPanel extends javax.swing.JPanel {
 			saveParas(userData);
 
 			try {
-				MainService.saveUpdate(userData);
+				boolean ret = MainService.saveUpdate(userData);
+				if(ret){
+					JOptionPane.showMessageDialog(this, "build OK");
+				}else{
+					JOptionPane.showMessageDialog(this, "build fail");
+				}
 			} catch (Exception e) {
 				log.error("buildBtnActionPerformed", e);
-				JOptionPane.showMessageDialog(MainPanel.this, e.getMessage());
+				JOptionPane.showMessageDialog(this, e.getMessage());
 			}
 		}
 	}

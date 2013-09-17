@@ -1,0 +1,24 @@
+<html>
+<head>
+</head>
+<body>
+date : $dateStr</h1>
+<br/>
+pathList:
+<table>
+	<colgroup>
+		<col width="30%"><col>
+		<col width="70%"><col>
+	</colgroup>
+#foreach( $path in $paths )
+	<tr>
+    	<td>$path.modifyType</td>
+    	<td>$path.path</td>
+    </tr>
+#end
+</table>
+startVersion : $userData.startVersion
+<br/>
+endVersion : $userData.endVersion	
+</body>
+</html>
