@@ -13,9 +13,10 @@ import java.util.Properties;
 import org.apache.velocity.Template;
 import org.apache.velocity.VelocityContext;
 import org.apache.velocity.app.Velocity;
-import org.apache.velocity.app.VelocityEngine;
 import org.apache.velocity.exception.ParseErrorException;
 import org.apache.velocity.exception.ResourceNotFoundException;
+import org.apache.velocity.runtime.RuntimeConstants;
+import org.apache.velocity.runtime.resource.loader.ClasspathResourceLoader;
 
 import com.jack.findUpdate.dataCollect.DataCollect;
 import com.jack.findUpdate.dataCollect.DataCollectFactory;
@@ -75,7 +76,7 @@ public class MainService {
 		String srcDir = destDir + "/src";
 		if(new File(srcDir).exists()){			
 			FileUtil.copyDirectiory(destDir + "/src", destDir + "/WebRoot/WEB-INF/classes");
-			//TODO
+			FileUtil.deleteFile(new File(srcDir));
 		}
 		// save update info
 		saveUpdateInfo(paths, date, userData, updateDir);
@@ -85,7 +86,8 @@ public class MainService {
 	private static void saveUpdateInfo(List<ModifyPath> paths, String dateStr,
 			UserData userData, String updateDir) throws IOException {
 		Properties p = new Properties();
-		p.setProperty(VelocityEngine.FILE_RESOURCE_LOADER_PATH, MainService.class.getResource(".").getPath());
+		p.setProperty(RuntimeConstants.RESOURCE_LOADER, "classpath");
+		p.setProperty("classpath.resource.loader.class",ClasspathResourceLoader.class.getName());
 		Velocity.init(p);
 		VelocityContext context = new VelocityContext();
 		context.put("paths", paths);

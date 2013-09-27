@@ -40,7 +40,7 @@ public class SVNCollect implements DataCollect{
 		if(ret==null){
 			throw new Exception("svncollect execmd error");
 		}
-		ByteArrayInputStream is = new ByteArrayInputStream(ret.getBytes("utf8"));
+		ByteArrayInputStream is = new ByteArrayInputStream(ret.getBytes(System.getProperty("file.encoding")));
 		List<ModifyPath> paths = new TranslateXMLtoModifyPath().getModifyPaths(is);
 		return paths;
 	}

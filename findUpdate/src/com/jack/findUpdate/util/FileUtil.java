@@ -54,6 +54,20 @@ public class FileUtil {
         }
     }
     
+	public static void deleteFile(File file) {
+		if (file.exists()) {
+			if (file.isFile()) {
+				file.delete();
+			} else if (file.isDirectory()) {
+				File files[] = file.listFiles();
+				for (int i = 0; i < files.length; i++) {
+					deleteFile(files[i]);
+				}
+			}
+			file.delete();
+		}
+	}
+    
     public static void main(String[] args) throws IOException {
 		String src = "F:\\testsvn\\test\\c";
 		String dest = "F:\\testsvn\\test\\jack\\f";
