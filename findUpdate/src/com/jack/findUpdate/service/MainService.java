@@ -72,6 +72,11 @@ public class MainService {
 				deletePaths.add(path);
 			}
 		}
+		String srcDir = destDir + "/src";
+		if(new File(srcDir).exists()){			
+			FileUtil.copyDirectiory(destDir + "/src", destDir + "/WebRoot/WEB-INF/classes");
+			//TODO
+		}
 		// save update info
 		saveUpdateInfo(paths, date, userData, updateDir);
 		return true;

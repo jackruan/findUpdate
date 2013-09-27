@@ -36,11 +36,11 @@ public class SVNCollect implements DataCollect{
 		}else{
 			toStr = userData.getEndVersion() + "";
 		}
-		String ret = CmdUtil.exeCmd(MessageFormat.format(cmd, userData.getToolPath(), userData.getStartVersion(), toStr, userData.getUsername(), userData.getPassword(), userData.getProjectPath()));
+		String ret = CmdUtil.exeCmd(MessageFormat.format(cmd, userData.getToolPath(), userData.getStartVersion() + "", toStr, userData.getUsername(), userData.getPassword(), userData.getProjectPath()));
 		if(ret==null){
 			throw new Exception("svncollect execmd error");
 		}
-		ByteArrayInputStream is = new ByteArrayInputStream(ret.getBytes("ISO-8859-1"));
+		ByteArrayInputStream is = new ByteArrayInputStream(ret.getBytes("utf8"));
 		List<ModifyPath> paths = new TranslateXMLtoModifyPath().getModifyPaths(is);
 		return paths;
 	}
