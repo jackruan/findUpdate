@@ -11,6 +11,10 @@ import javax.xml.parsers.ParserConfigurationException;
 import javax.xml.parsers.SAXParser;
 import javax.xml.parsers.SAXParserFactory;
 
+import org.dom4j.Document;
+import org.dom4j.Element;
+import org.dom4j.Node;
+import org.dom4j.io.SAXReader;
 import org.xml.sax.Attributes;
 import org.xml.sax.SAXException;
 import org.xml.sax.helpers.DefaultHandler;
@@ -26,7 +30,6 @@ import com.jack.findUpdate.util.CmdUtil;
  */
 public class SVNCollect implements DataCollect{
 
-	private String cmd = "{0} diff -r {1}:{2} --summarize --xml --username {3} --password {4} --non-interactive {5}";
 	
 	@Override
 	public List<ModifyPath> findModifyPathsFromVersion(UserData userData) throws Exception {
@@ -36,6 +39,7 @@ public class SVNCollect implements DataCollect{
 		}else{
 			toStr = userData.getEndVersion() + "";
 		}
+		String cmd = "{0} diff -r {1}:{2} --summarize --xml --username {3} --password {4} --non-interactive {5}";
 		String ret = CmdUtil.exeCmd(MessageFormat.format(cmd, userData.getToolPath(), userData.getStartVersion() + "", toStr, userData.getUsername(), userData.getPassword(), userData.getProjectPath()));
 		if(ret==null){
 			throw new Exception("svncollect execmd error");
@@ -97,6 +101,30 @@ public class SVNCollect implements DataCollect{
 				temp.setPath(new String(ch, start, length));
 			}
 		}
+	}
+
+	@Override
+	public int getCurrentVersion(UserData userData) throws Exception {
+		return getVersion(userData, "base");
+	}
+	
+	private int getVersion(UserData userData, String key)throws Exception{
+		String cmd = "{0} info {1} -r " + key + " --xml ";
+		String ret = CmdUtil.exeCmd(MessageFormat.format(cmd, userData.getToolPath(), userData.getProjectPath()));
+		if(ret==null){
+			throw new Exception("svncollect execmd error");
+		}
+		ByteArrayInputStream is = new ByteArrayInputStream(ret.getBytes(System.getProperty("file.encoding")));
+		SAXReader saxReader = new SAXReader();
+		Document document = saxReader.read(is);
+		Node node = document.getRootElement().selectSingleNode("//entry");
+		Element e = (Element)node;
+		return Integer.parseInt(e.attribute("revision").getValue());
+	}
+
+	@Override
+	public int getHeadVersion(UserData userData) throws Exception{
+		return getVersion(userData, "head");
 	}
 
 }

@@ -265,6 +265,10 @@
     <Component class="javax.swing.JTextField" name="startVersion">
     </Component>
     <Component class="javax.swing.JTextField" name="endVersion">
+      <Properties>
+        <Property name="editable" type="boolean" value="false"/>
+        <Property name="text" type="java.lang.String" value="0"/>
+      </Properties>
     </Component>
     <Component class="javax.swing.JLabel" name="usernameTxt">
       <Properties>
@@ -290,7 +294,9 @@
     </Component>
     <Component class="javax.swing.JCheckBox" name="headVersion">
       <Properties>
+        <Property name="selected" type="boolean" value="true"/>
         <Property name="text" type="java.lang.String" value="&#x6700;&#x65b0;&#x7248;&#x672c;"/>
+        <Property name="enabled" type="boolean" value="false"/>
       </Properties>
       <Events>
         <EventHandler event="mouseClicked" listener="java.awt.event.MouseListener" parameters="java.awt.event.MouseEvent" handler="headVersionMouseClicked"/>

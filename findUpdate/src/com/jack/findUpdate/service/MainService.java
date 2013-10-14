@@ -23,6 +23,7 @@ import com.jack.findUpdate.dataCollect.DataCollectFactory;
 import com.jack.findUpdate.dto.ModifyPath;
 import com.jack.findUpdate.dto.UserData;
 import com.jack.findUpdate.util.FileUtil;
+import com.jack.findUpdate.util.PropertiesUtil;
 
 public class MainService {
 	public static List<ModifyPath> getModifyPath(UserData userData)
@@ -34,6 +35,14 @@ public class MainService {
 	}
 
 	public static boolean saveUpdate(UserData userData) throws Exception {
+		//check version
+		DataCollect collect = DataCollectFactory.getCollect(userData.getToolType());
+		int curVersion = collect.getCurrentVersion(userData);
+		int headVersion = collect.getHeadVersion(userData);
+		if(curVersion!=headVersion){
+			throw new Exception(PropertiesUtil.getErrorText("checkversion.fail"));
+		}
+		//get modify path
 		List<ModifyPath> paths = getModifyPath(userData);
 		if (paths == null || paths.size() == 0) {
 			return true;
@@ -48,7 +57,7 @@ public class MainService {
 		// copy update file
 		String srcClassDir = null;
 		if (userData.getAppType().toLowerCase().equals("web")) {
-			srcClassDir = "WebRoot/WEB-INF/classes";
+			srcClassDir = "WebRoot/WEB-INF/classes";//TODO
 		}
 		List<ModifyPath> deletePaths = new ArrayList<ModifyPath>();
 		for (ModifyPath path : paths) {
@@ -61,7 +70,13 @@ public class MainService {
 						String temp = path.getPath().replace(
 								"src", srcClassDir).replaceAll(
 								".java", ".class");
-						FileUtil.copyFile(new File(temp), new File(destDir + temp.replace(userData.getProjectPath(), "")));
+						String dir = temp.substring(0, temp.lastIndexOf(File.separator));
+						String targetClass = temp.substring(temp.lastIndexOf(File.separator) + 1);
+						String[] allClasses = FileUtil.findRelateClass(dir, targetClass.replace(".class", ""));
+						for(String c : allClasses){
+							String temp2 = dir + File.separator + c;
+							FileUtil.copyFile(new File(temp2), new File(destDir + temp2.replace(userData.getProjectPath(), "")));
+						}
 					} else {
 						FileUtil
 								.copyFile(
@@ -79,6 +94,7 @@ public class MainService {
 			FileUtil.deleteFile(new File(srcDir));
 		}
 		// save update info
+		userData.setEndVersion(headVersion);
 		saveUpdateInfo(paths, date, userData, updateDir);
 		return true;
 	}
