@@ -11,6 +11,7 @@ import javax.xml.parsers.ParserConfigurationException;
 import javax.xml.parsers.SAXParser;
 import javax.xml.parsers.SAXParserFactory;
 
+import org.apache.log4j.Logger;
 import org.dom4j.Document;
 import org.dom4j.Element;
 import org.dom4j.Node;
@@ -21,6 +22,7 @@ import org.xml.sax.helpers.DefaultHandler;
 
 import com.jack.findUpdate.dto.ModifyPath;
 import com.jack.findUpdate.dto.UserData;
+import com.jack.findUpdate.service.MainService;
 import com.jack.findUpdate.util.CmdUtil;
 
 /**
@@ -30,7 +32,7 @@ import com.jack.findUpdate.util.CmdUtil;
  */
 public class SVNCollect implements DataCollect{
 
-	
+	private static Logger log = Logger.getLogger(SVNCollect.class);
 	@Override
 	public List<ModifyPath> findModifyPathsFromVersion(UserData userData) throws Exception {
 		String toStr;
@@ -109,16 +111,19 @@ public class SVNCollect implements DataCollect{
 	}
 	
 	private int getVersion(UserData userData, String key)throws Exception{
+		log.info("getVersion execute cmd");
 		String cmd = "{0} info {1} -r " + key + " --xml ";
 		String ret = CmdUtil.exeCmd(MessageFormat.format(cmd, userData.getToolPath(), userData.getProjectPath()));
 		if(ret==null){
 			throw new Exception("svncollect execmd error");
 		}
+		log.info("getVersion parse result");
 		ByteArrayInputStream is = new ByteArrayInputStream(ret.getBytes(System.getProperty("file.encoding")));
 		SAXReader saxReader = new SAXReader();
 		Document document = saxReader.read(is);
 		Node node = document.getRootElement().selectSingleNode("//entry");
 		Element e = (Element)node;
+		log.info("getVersion parse result end");
 		return Integer.parseInt(e.attribute("revision").getValue());
 	}
 

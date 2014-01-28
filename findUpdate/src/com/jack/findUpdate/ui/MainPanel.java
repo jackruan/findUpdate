@@ -115,7 +115,6 @@ public class MainPanel extends javax.swing.JPanel {
 
 		buildPath.setChooseDir(true);
 
-		endVersion.setEditable(false);
 		endVersion.setText("0");
 
 		usernameTxt.setText("\u7528\u6237\u540d");
@@ -129,9 +128,7 @@ public class MainPanel extends javax.swing.JPanel {
 			}
 		});
 
-		headVersion.setSelected(true);
 		headVersion.setText("\u6700\u65b0\u7248\u672c");
-		headVersion.setEnabled(false);
 		headVersion.addMouseListener(new java.awt.event.MouseAdapter() {
 			public void mouseClicked(java.awt.event.MouseEvent evt) {
 				headVersionMouseClicked(evt);

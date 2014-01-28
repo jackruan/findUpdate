@@ -10,6 +10,7 @@ import java.util.Date;
 import java.util.List;
 import java.util.Properties;
 
+import org.apache.log4j.Logger;
 import org.apache.velocity.Template;
 import org.apache.velocity.VelocityContext;
 import org.apache.velocity.app.Velocity;
@@ -26,6 +27,8 @@ import com.jack.findUpdate.util.FileUtil;
 import com.jack.findUpdate.util.PropertiesUtil;
 
 public class MainService {
+	private static Logger log = Logger.getLogger(MainService.class);
+	
 	public static List<ModifyPath> getModifyPath(UserData userData)
 			throws Exception {
 		DataCollect collect = DataCollectFactory.getCollect(userData
@@ -36,24 +39,33 @@ public class MainService {
 
 	public static boolean saveUpdate(UserData userData) throws Exception {
 		//check version
+		log.info("check version begin");
 		DataCollect collect = DataCollectFactory.getCollect(userData.getToolType());
 		int curVersion = collect.getCurrentVersion(userData);
-		int headVersion = collect.getHeadVersion(userData);
-		if(curVersion!=headVersion){
+		int endVersion = userData.getEndVersion();
+		if(endVersion == 0){
+			endVersion = collect.getHeadVersion(userData);
+		}
+		if(curVersion!=endVersion){
 			throw new Exception(PropertiesUtil.getErrorText("checkversion.fail"));
 		}
+		log.info("check version end");
 		//get modify path
+		log.info("get modify path begin");
 		List<ModifyPath> paths = getModifyPath(userData);
 		if (paths == null || paths.size() == 0) {
 			return true;
 		}
+		log.info("get modify path end");
 		// generdate dir
+		log.info("generdate dir begin");
 		SimpleDateFormat sdf = new SimpleDateFormat("yyyy_MM_dd_HH_mm_ss");
 		String date = sdf.format(new Date());
 		String destDir = userData.getBuildPath() + "/" + date + "/data";
 		new File(destDir).mkdirs();
 		String updateDir = destDir + "/..";
 		new File(updateDir).mkdirs();
+		log.info("generdate dir end");
 		// copy update file
 		String srcClassDir = null;
 		if (userData.getAppType().toLowerCase().equals("web")) {
@@ -94,8 +106,9 @@ public class MainService {
 			FileUtil.deleteFile(new File(srcDir));
 		}
 		// save update info
-		userData.setEndVersion(headVersion);
+		userData.setEndVersion(endVersion);
 		saveUpdateInfo(paths, date, userData, updateDir);
+		log.info("complete");
 		return true;
 	}
 
