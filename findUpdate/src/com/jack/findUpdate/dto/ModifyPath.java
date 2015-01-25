@@ -10,7 +10,7 @@ public class ModifyPath {
 	}
 
 	public void setPath(String path) {
-		this.path = path;
+		this.path = path.replaceAll("\\\\", "/");
 	}
 
 	public ModifyType getModifyType() {

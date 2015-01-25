@@ -18,6 +18,7 @@ import org.apache.velocity.exception.ParseErrorException;
 import org.apache.velocity.exception.ResourceNotFoundException;
 import org.apache.velocity.runtime.RuntimeConstants;
 import org.apache.velocity.runtime.resource.loader.ClasspathResourceLoader;
+import org.dom4j.Attribute;
 
 import com.jack.findUpdate.dataCollect.DataCollect;
 import com.jack.findUpdate.dataCollect.DataCollectFactory;
@@ -25,6 +26,7 @@ import com.jack.findUpdate.dto.ModifyPath;
 import com.jack.findUpdate.dto.UserData;
 import com.jack.findUpdate.util.FileUtil;
 import com.jack.findUpdate.util.PropertiesUtil;
+import com.jack.findUpdate.util.XmlUtil;
 
 public class MainService {
 	private static Logger log = Logger.getLogger(MainService.class);
@@ -66,34 +68,60 @@ public class MainService {
 		String updateDir = destDir + "/..";
 		new File(updateDir).mkdirs();
 		log.info("generdate dir end");
-		// copy update file
-		String srcClassDir = null;
-		if (userData.getAppType().toLowerCase().equals("web")) {
-			srcClassDir = "WebRoot/WEB-INF/classes";//TODO
+		
+//		String srcClassDir = null;
+//		if (userData.getAppType().toLowerCase().equals("web")) {
+//			srcClassDir = "WebRoot/WEB-INF/classes";//TODO
+//		}
+		
+		//get source path and output path from .classpath
+		File classPathFile = new File(userData.getProjectPath() + "/.classpath");
+		String outputPath = null;
+		List<String> sourcePaths = new ArrayList<String>();
+		String projectPath = userData.getProjectPath().replaceAll("\\\\", "/") + "/";
+		if(classPathFile.exists()){
+			outputPath = XmlUtil.selectSingleAttribute(classPathFile, "/classpath/classpathentry[@kind='output']/@path").getValue();
+			outputPath = userData.getProjectPath().replaceAll("\\\\", "/") + "/" + outputPath;
+			List<Attribute> attrs = XmlUtil.selectAttributeList(classPathFile, "/classpath/classpathentry[@kind='src']/@path");
+			for(Attribute attr : attrs){
+				sourcePaths.add(projectPath + attr.getValue());
+			}
+			if(outputPath==null || sourcePaths.size()==0){
+				throw new Exception(PropertiesUtil.getErrorText("classpath.srcOrOutputNotExists"));
+			}
+		}else{
+			throw new Exception(PropertiesUtil.getErrorText("classpath.notexists"));
 		}
+		
+		// copy update file
 		List<ModifyPath> deletePaths = new ArrayList<ModifyPath>();
 		for (ModifyPath path : paths) {
 			if (path.getModifyType() == ModifyPath.ModifyType.ADD
 					|| path.getModifyType() == ModifyPath.ModifyType.MODIFY) {
+				String newPath = path.getPath();
+				for(String sourcePath : sourcePaths){
+					if(path.getPath().contains(sourcePath)){
+						newPath = path.getPath().replaceAll(sourcePath, outputPath);
+						break;
+					}
+				}
 				if (path.getPathType() == ModifyPath.PathType.DIR) {
-					new File(path.getPath()).mkdirs();
+					//new File(path.getPath()).mkdirs();
 				} else if (path.getPathType() == ModifyPath.PathType.FILE) {
 					if (path.getPath().endsWith(".java")) {
-						String temp = path.getPath().replace(
-								"src", srcClassDir).replaceAll(
-								".java", ".class");
-						String dir = temp.substring(0, temp.lastIndexOf(File.separator));
-						String targetClass = temp.substring(temp.lastIndexOf(File.separator) + 1);
+						String temp = newPath.replace(".java", ".class");
+						String dir = temp.substring(0, temp.lastIndexOf("/"));
+						String targetClass = temp.substring(temp.lastIndexOf("/") + 1);
 						String[] allClasses = FileUtil.findRelateClass(dir, targetClass.replace(".class", ""));
 						for(String c : allClasses){
-							String temp2 = dir + File.separator + c;
-							FileUtil.copyFile(new File(temp2), new File(destDir + temp2.replace(userData.getProjectPath(), "")));
+							String temp2 = dir + "/" + c;
+							FileUtil.copyFile(new File(temp2), new File(destDir + temp2.replace(userData.getProjectPath().replaceAll("\\\\", "/"), "")));
 						}
 					} else {
 						FileUtil
 								.copyFile(
-										new File(path.getPath()),
-										new File(destDir + path.getPath().replace(userData.getProjectPath(), "")));
+										new File(newPath),
+										new File(destDir + newPath.replace(userData.getProjectPath().replaceAll("\\\\", "/"), "")));
 					}
 				}
 			} else if (path.getModifyType() == ModifyPath.ModifyType.REMOVE) {
