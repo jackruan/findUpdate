@@ -18,6 +18,7 @@ import com.jack.findUpdate.SystemPara;
 import com.jack.findUpdate.dto.ModifyPath;
 import com.jack.findUpdate.dto.UserData;
 import com.jack.findUpdate.service.MainService;
+import com.jack.findUpdate.ui.MyFileChoose.AfterChooseListener;
 import com.jack.findUpdate.util.PropertiesUtil;
 import com.jack.findUpdate.util.ValidateUtil;
 
@@ -41,7 +42,22 @@ public class MainPanel extends javax.swing.JPanel {
 		gitBtn.setActionCommand(gitBtn.getText());
 		webBtn.setActionCommand(webBtn.getText());
 		javaBtn.setActionCommand(javaBtn.getText());
+		buildPath.addAfterChooseListener(new AfterChooseListener(){
+			@Override
+			public void afterChoose(String choosePath) {
+				try {
+					int sVersion = MainService.checkBaseInfo(choosePath);
+					if(sVersion != -1){
+						startVersion.setText(sVersion + "");
+					}
+				} catch (Exception e) {
+					log.error("initData.buildPath.addAfterChooseListener", e);
+					JOptionPane.showMessageDialog(MainPanel.this,
+							PropertiesUtil.getErrorText("get.baseInfo.error"));
+				}
 
+			}
+		});
 	}
 
 	//GEN-BEGIN:initComponents
@@ -116,6 +132,7 @@ public class MainPanel extends javax.swing.JPanel {
 		buildPath.setChooseDir(true);
 
 		endVersion.setText("0");
+		endVersion.setEnabled(false);
 
 		usernameTxt.setText("\u7528\u6237\u540d");
 
@@ -128,7 +145,9 @@ public class MainPanel extends javax.swing.JPanel {
 			}
 		});
 
+		headVersion.setSelected(true);
 		headVersion.setText("\u6700\u65b0\u7248\u672c");
+		headVersion.setEnabled(false);
 		headVersion.addMouseListener(new java.awt.event.MouseAdapter() {
 			public void mouseClicked(java.awt.event.MouseEvent evt) {
 				headVersionMouseClicked(evt);
@@ -149,8 +168,18 @@ public class MainPanel extends javax.swing.JPanel {
 												layout
 														.createParallelGroup(
 																javax.swing.GroupLayout.Alignment.LEADING)
-														.addComponent(
-																toolPathTxt)
+														.addGroup(
+																layout
+																		.createSequentialGroup()
+																		.addComponent(
+																				toolPathTxt)
+																		.addPreferredGap(
+																				javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+																		.addComponent(
+																				toolPath,
+																				javax.swing.GroupLayout.PREFERRED_SIZE,
+																				javax.swing.GroupLayout.DEFAULT_SIZE,
+																				javax.swing.GroupLayout.PREFERRED_SIZE))
 														.addGroup(
 																layout
 																		.createSequentialGroup()
@@ -217,16 +246,36 @@ public class MainPanel extends javax.swing.JPanel {
 																								javax.swing.GroupLayout.PREFERRED_SIZE,
 																								69,
 																								javax.swing.GroupLayout.PREFERRED_SIZE)))
-														.addComponent(
-																projectPathTxt)
-														.addComponent(
-																buildPathTxt))
+														.addGroup(
+																layout
+																		.createSequentialGroup()
+																		.addComponent(
+																				projectPathTxt)
+																		.addPreferredGap(
+																				javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+																		.addComponent(
+																				projectPath,
+																				javax.swing.GroupLayout.PREFERRED_SIZE,
+																				javax.swing.GroupLayout.DEFAULT_SIZE,
+																				javax.swing.GroupLayout.PREFERRED_SIZE))
+														.addGroup(
+																layout
+																		.createSequentialGroup()
+																		.addComponent(
+																				buildPathTxt)
+																		.addPreferredGap(
+																				javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+																		.addComponent(
+																				buildPath,
+																				javax.swing.GroupLayout.PREFERRED_SIZE,
+																				javax.swing.GroupLayout.DEFAULT_SIZE,
+																				javax.swing.GroupLayout.PREFERRED_SIZE)))
 										.addContainerGap(159, Short.MAX_VALUE))
 						.addGroup(
 								layout.createSequentialGroup().addGap(10, 10,
 										10).addComponent(jSeparator4,
 										javax.swing.GroupLayout.DEFAULT_SIZE,
-										506, Short.MAX_VALUE))
+										565, Short.MAX_VALUE))
 						.addGroup(
 								layout
 										.createSequentialGroup()
@@ -235,22 +284,22 @@ public class MainPanel extends javax.swing.JPanel {
 										.addPreferredGap(
 												javax.swing.LayoutStyle.ComponentPlacement.RELATED)
 										.addComponent(javaBtn).addContainerGap(
-												414, Short.MAX_VALUE))
+												442, Short.MAX_VALUE))
 						.addGroup(
 								layout.createSequentialGroup().addGap(10, 10,
 										10).addComponent(jSeparator3,
 										javax.swing.GroupLayout.DEFAULT_SIZE,
-										506, Short.MAX_VALUE))
+										565, Short.MAX_VALUE))
 						.addGroup(
 								layout.createSequentialGroup().addGap(10, 10,
 										10).addComponent(jSeparator2,
 										javax.swing.GroupLayout.DEFAULT_SIZE,
-										506, Short.MAX_VALUE))
+										565, Short.MAX_VALUE))
 						.addGroup(
 								javax.swing.GroupLayout.Alignment.TRAILING,
 								layout
 										.createSequentialGroup()
-										.addContainerGap(386, Short.MAX_VALUE)
+										.addContainerGap(425, Short.MAX_VALUE)
 										.addComponent(previewBtn)
 										.addPreferredGap(
 												javax.swing.LayoutStyle.ComponentPlacement.RELATED)
@@ -264,30 +313,10 @@ public class MainPanel extends javax.swing.JPanel {
 										.addPreferredGap(
 												javax.swing.LayoutStyle.ComponentPlacement.RELATED)
 										.addComponent(gitBtn).addContainerGap(
-												424, Short.MAX_VALUE))
+												451, Short.MAX_VALUE))
 						.addComponent(jSeparator1,
-								javax.swing.GroupLayout.DEFAULT_SIZE, 516,
-								Short.MAX_VALUE).addGroup(
-								layout.createSequentialGroup().addGap(62, 62,
-										62).addComponent(buildPath,
-										javax.swing.GroupLayout.PREFERRED_SIZE,
-										javax.swing.GroupLayout.DEFAULT_SIZE,
-										javax.swing.GroupLayout.PREFERRED_SIZE)
-										.addContainerGap(155, Short.MAX_VALUE))
-						.addGroup(
-								layout.createSequentialGroup().addGap(62, 62,
-										62).addComponent(projectPath,
-										javax.swing.GroupLayout.PREFERRED_SIZE,
-										javax.swing.GroupLayout.DEFAULT_SIZE,
-										javax.swing.GroupLayout.PREFERRED_SIZE)
-										.addContainerGap(155, Short.MAX_VALUE))
-						.addGroup(
-								layout.createSequentialGroup().addGap(62, 62,
-										62).addComponent(toolPath,
-										javax.swing.GroupLayout.PREFERRED_SIZE,
-										javax.swing.GroupLayout.DEFAULT_SIZE,
-										javax.swing.GroupLayout.PREFERRED_SIZE)
-										.addContainerGap(155, Short.MAX_VALUE)));
+								javax.swing.GroupLayout.DEFAULT_SIZE, 575,
+								Short.MAX_VALUE));
 
 		layout.linkSize(javax.swing.SwingConstants.HORIZONTAL,
 				new java.awt.Component[] { endVersion, password, startVersion,
@@ -344,7 +373,7 @@ public class MainPanel extends javax.swing.JPanel {
 										.addGroup(
 												layout
 														.createParallelGroup(
-																javax.swing.GroupLayout.Alignment.CENTER)
+																javax.swing.GroupLayout.Alignment.LEADING)
 														.addComponent(
 																toolPathTxt)
 														.addComponent(
@@ -384,7 +413,7 @@ public class MainPanel extends javax.swing.JPanel {
 										.addGroup(
 												layout
 														.createParallelGroup(
-																javax.swing.GroupLayout.Alignment.CENTER)
+																javax.swing.GroupLayout.Alignment.LEADING)
 														.addComponent(
 																projectPathTxt)
 														.addComponent(
@@ -397,7 +426,7 @@ public class MainPanel extends javax.swing.JPanel {
 										.addGroup(
 												layout
 														.createParallelGroup(
-																javax.swing.GroupLayout.Alignment.CENTER)
+																javax.swing.GroupLayout.Alignment.LEADING)
 														.addComponent(
 																buildPathTxt)
 														.addComponent(
@@ -405,7 +434,7 @@ public class MainPanel extends javax.swing.JPanel {
 																javax.swing.GroupLayout.PREFERRED_SIZE,
 																javax.swing.GroupLayout.DEFAULT_SIZE,
 																javax.swing.GroupLayout.PREFERRED_SIZE))
-										.addGap(17, 17, 17)
+										.addGap(13, 13, 13)
 										.addComponent(
 												jSeparator3,
 												javax.swing.GroupLayout.PREFERRED_SIZE,
@@ -428,7 +457,7 @@ public class MainPanel extends javax.swing.JPanel {
 												javax.swing.GroupLayout.PREFERRED_SIZE)
 										.addPreferredGap(
 												javax.swing.LayoutStyle.ComponentPlacement.RELATED,
-												93, Short.MAX_VALUE)
+												97, Short.MAX_VALUE)
 										.addGroup(
 												layout
 														.createParallelGroup(
@@ -547,7 +576,7 @@ public class MainPanel extends javax.swing.JPanel {
 		buildPath.setChoosePath(SystemPara.getProperties(
 				SystemPara.Type.buildPath, ""));
 		endVersion.setText(SystemPara.getProperties(SystemPara.Type.endVersion,
-				""));
+				"0"));
 		startVersion.setText(SystemPara.getProperties(
 				SystemPara.Type.startVersion, ""));
 		password

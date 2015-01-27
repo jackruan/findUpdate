@@ -2,12 +2,15 @@ package com.jack.findUpdate.service;
 
 import java.io.BufferedWriter;
 import java.io.File;
+import java.io.FileInputStream;
 import java.io.FileWriter;
 import java.io.IOException;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Date;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 import java.util.Properties;
 
 import org.apache.log4j.Logger;
@@ -66,7 +69,6 @@ public class MainService {
 		String destDir = userData.getBuildPath() + "/" + date + "/data";
 		new File(destDir).mkdirs();
 		String updateDir = destDir + "/..";
-		new File(updateDir).mkdirs();
 		log.info("generdate dir end");
 		
 //		String srcClassDir = null;
@@ -106,7 +108,7 @@ public class MainService {
 					}
 				}
 				if (path.getPathType() == ModifyPath.PathType.DIR) {
-					//new File(path.getPath()).mkdirs();
+					new File(path.getPath()).mkdirs();
 				} else if (path.getPathType() == ModifyPath.PathType.FILE) {
 					if (path.getPath().endsWith(".java")) {
 						String temp = newPath.replace(".java", ".class");
@@ -128,32 +130,56 @@ public class MainService {
 				deletePaths.add(path);
 			}
 		}
-		String srcDir = destDir + "/src";
-		if(new File(srcDir).exists()){			
-			FileUtil.copyDirectiory(destDir + "/src", destDir + "/WebRoot/WEB-INF/classes");
-			FileUtil.deleteFile(new File(srcDir));
-		}
+//		String srcDir = destDir + "/src";
+//		if(new File(srcDir).exists()){			
+//			FileUtil.copyDirectiory(destDir + "/src", destDir + "/WebRoot/WEB-INF/classes");
+//			FileUtil.deleteFile(new File(srcDir));
+//		}
 		// save update info
 		userData.setEndVersion(endVersion);
 		saveUpdateInfo(paths, date, userData, updateDir);
+		saveBaseInfo(userData.getBuildPath(), date, endVersion);
 		log.info("complete");
 		return true;
 	}
 
+	private static void saveBaseInfo(String buildPath, String lastdate, int endVersion) throws Exception {
+		try{
+			String baseInfoFile = buildPath + "/" + BASE_INFO_FILE;
+			File file = new File(baseInfoFile);
+			Map<String, String> map = null;
+			if(file.exists()){
+				map = PropertiesUtil.loadProperties(baseInfoFile);
+			}else{
+				map = new HashMap<String, String>();
+			}
+			map.put(BASE_INFO_LAST_DATE, lastdate);
+			map.put(BASE_INFO_LAST_VERSION, endVersion + "");
+			PropertiesUtil.saveProperties(baseInfoFile, map);
+		}catch(Exception e){
+			log.error("save baseinfo error", e);
+			throw new Exception(PropertiesUtil.getErrorText("save.baseInfo.error"));
+		}
+	}
+
 	private static void saveUpdateInfo(List<ModifyPath> paths, String dateStr,
 			UserData userData, String updateDir) throws IOException {
-		Properties p = new Properties();
-		p.setProperty(RuntimeConstants.RESOURCE_LOADER, "classpath");
-		p.setProperty("classpath.resource.loader.class",ClasspathResourceLoader.class.getName());
-		Velocity.init(p);
 		VelocityContext context = new VelocityContext();
 		context.put("paths", paths);
 		context.put("dateStr", dateStr);
 		context.put("userData", userData);
+		
+		saveTemple("updateinfo.vm", updateDir + "/update.xml", context);
+	}
+	
+	private static void saveTemple(String vmfile, String targetFile, VelocityContext context)throws IOException{
+		Properties p = new Properties();
+		p.setProperty(RuntimeConstants.RESOURCE_LOADER, "classpath");
+		p.setProperty("classpath.resource.loader.class",ClasspathResourceLoader.class.getName());
+		Velocity.init(p);
 		Template template = null;
-
 		try {
-			template = Velocity.getTemplate("updateinfo.vm");
+			template = Velocity.getTemplate(vmfile);
 		} catch (ResourceNotFoundException rnfe) {
 			System.out.println("Example : error : cannot find template "
 					+ "update_info.vm");
@@ -161,24 +187,36 @@ public class MainService {
 			System.out.println("Example : Syntax error in template "
 					+ "update_info.vm" + ":" + pee);
 		}
-
-		/*
-		 * Now have the template engine process your template using the data
-		 * placed into the context. Think of it as a 'merge' of the template and
-		 * the data to produce the output stream.
-		 */
-
+		
 		BufferedWriter writer;
-		writer = new BufferedWriter(new FileWriter(new File(updateDir + "/update.html")));
+		writer = new BufferedWriter(new FileWriter(new File(targetFile)));
 
 		if (template != null)
 			template.merge(context, writer);
 
-		/*
-		 * flush and cleanup
-		 */
-
 		writer.flush();
 		writer.close();
+	}
+	
+	private static final String BASE_INFO_FILE = "baseinfo.properties";
+	private static final String BASE_INFO_LAST_DATE = "lastDate";
+	private static final String BASE_INFO_LAST_VERSION = "lastVersion";
+
+	public static int checkBaseInfo(String buildPath) throws Exception{
+		//check baseInfo file
+		File file = new File(buildPath + "/" + BASE_INFO_FILE);
+		if(file.exists()){
+			Properties p = new Properties();
+			p.load(new FileInputStream(file));
+			//get last version from baseInfo
+			String lastVersion = p.getProperty(BASE_INFO_LAST_VERSION);
+			if(lastVersion == null){
+				return -1;
+			}else{
+				return Integer.parseInt(lastVersion);
+			}
+		}else{
+			return -1;			
+		}
 	}
 }

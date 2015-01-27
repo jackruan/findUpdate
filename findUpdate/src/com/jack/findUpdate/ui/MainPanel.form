@@ -23,7 +23,11 @@
           <Group type="102" attributes="0">
               <EmptySpace max="-2" attributes="0"/>
               <Group type="103" groupAlignment="0" attributes="0">
-                  <Component id="toolPathTxt" alignment="0" min="-2" max="-2" attributes="0"/>
+                  <Group type="102" alignment="0" attributes="0">
+                      <Component id="toolPathTxt" min="-2" max="-2" attributes="0"/>
+                      <EmptySpace max="-2" attributes="0"/>
+                      <Component id="toolPath" linkSize="3" min="-2" max="-2" attributes="0"/>
+                  </Group>
                   <Group type="102" alignment="0" attributes="0">
                       <Group type="103" groupAlignment="0" attributes="0">
                           <Component id="startVersionTxt" alignment="0" min="-2" max="-2" attributes="0"/>
@@ -52,32 +56,40 @@
                           <Component id="password" linkSize="1" alignment="0" min="-2" pref="69" max="-2" attributes="0"/>
                       </Group>
                   </Group>
-                  <Component id="projectPathTxt" alignment="0" min="-2" max="-2" attributes="0"/>
-                  <Component id="buildPathTxt" alignment="0" min="-2" max="-2" attributes="0"/>
+                  <Group type="102" alignment="0" attributes="0">
+                      <Component id="projectPathTxt" min="-2" max="-2" attributes="0"/>
+                      <EmptySpace max="-2" attributes="0"/>
+                      <Component id="projectPath" linkSize="3" min="-2" max="-2" attributes="0"/>
+                  </Group>
+                  <Group type="102" alignment="0" attributes="0">
+                      <Component id="buildPathTxt" min="-2" max="-2" attributes="0"/>
+                      <EmptySpace max="-2" attributes="0"/>
+                      <Component id="buildPath" linkSize="3" min="-2" max="-2" attributes="0"/>
+                  </Group>
               </Group>
               <EmptySpace pref="159" max="32767" attributes="0"/>
           </Group>
           <Group type="102" alignment="0" attributes="0">
               <EmptySpace min="10" pref="10" max="10" attributes="0"/>
-              <Component id="jSeparator4" pref="506" max="32767" attributes="0"/>
+              <Component id="jSeparator4" pref="565" max="32767" attributes="0"/>
           </Group>
           <Group type="102" alignment="0" attributes="0">
               <EmptySpace min="10" pref="10" max="10" attributes="0"/>
               <Component id="webBtn" min="-2" max="-2" attributes="0"/>
               <EmptySpace max="-2" attributes="0"/>
               <Component id="javaBtn" min="-2" max="-2" attributes="0"/>
-              <EmptySpace pref="414" max="32767" attributes="0"/>
+              <EmptySpace pref="442" max="32767" attributes="0"/>
           </Group>
           <Group type="102" alignment="0" attributes="0">
               <EmptySpace min="10" pref="10" max="10" attributes="0"/>
-              <Component id="jSeparator3" pref="506" max="32767" attributes="0"/>
+              <Component id="jSeparator3" pref="565" max="32767" attributes="0"/>
           </Group>
           <Group type="102" alignment="0" attributes="0">
               <EmptySpace min="10" pref="10" max="10" attributes="0"/>
-              <Component id="jSeparator2" pref="506" max="32767" attributes="0"/>
+              <Component id="jSeparator2" pref="565" max="32767" attributes="0"/>
           </Group>
           <Group type="102" alignment="1" attributes="0">
-              <EmptySpace pref="386" max="32767" attributes="0"/>
+              <EmptySpace pref="425" max="32767" attributes="0"/>
               <Component id="previewBtn" min="-2" max="-2" attributes="0"/>
               <EmptySpace max="-2" attributes="0"/>
               <Component id="buildBtn" min="-2" max="-2" attributes="0"/>
@@ -88,24 +100,9 @@
               <Component id="svnBtn" min="-2" max="-2" attributes="0"/>
               <EmptySpace max="-2" attributes="0"/>
               <Component id="gitBtn" min="-2" max="-2" attributes="0"/>
-              <EmptySpace pref="424" max="32767" attributes="0"/>
+              <EmptySpace pref="451" max="32767" attributes="0"/>
           </Group>
-          <Component id="jSeparator1" alignment="0" pref="516" max="32767" attributes="0"/>
-          <Group type="102" alignment="0" attributes="0">
-              <EmptySpace min="62" pref="62" max="62" attributes="0"/>
-              <Component id="buildPath" linkSize="3" min="-2" max="-2" attributes="0"/>
-              <EmptySpace pref="155" max="32767" attributes="0"/>
-          </Group>
-          <Group type="102" alignment="0" attributes="0">
-              <EmptySpace min="62" pref="62" max="62" attributes="0"/>
-              <Component id="projectPath" linkSize="3" min="-2" max="-2" attributes="0"/>
-              <EmptySpace pref="155" max="32767" attributes="0"/>
-          </Group>
-          <Group type="102" alignment="0" attributes="0">
-              <EmptySpace min="62" pref="62" max="62" attributes="0"/>
-              <Component id="toolPath" linkSize="3" min="-2" max="-2" attributes="0"/>
-              <EmptySpace pref="155" max="32767" attributes="0"/>
-          </Group>
+          <Component id="jSeparator1" alignment="0" pref="575" max="32767" attributes="0"/>
       </Group>
     </DimensionLayout>
     <DimensionLayout dim="1">
@@ -127,9 +124,9 @@
                   <Component id="gitBtn" alignment="3" min="-2" max="-2" attributes="0"/>
               </Group>
               <EmptySpace max="-2" attributes="0"/>
-              <Group type="103" groupAlignment="2" attributes="0">
-                  <Component id="toolPathTxt" alignment="2" min="-2" max="-2" attributes="0"/>
-                  <Component id="toolPath" alignment="2" min="-2" max="-2" attributes="0"/>
+              <Group type="103" groupAlignment="0" attributes="0">
+                  <Component id="toolPathTxt" min="-2" max="-2" attributes="0"/>
+                  <Component id="toolPath" alignment="0" min="-2" max="-2" attributes="0"/>
               </Group>
               <EmptySpace max="-2" attributes="0"/>
               <Group type="103" groupAlignment="2" attributes="0">
@@ -141,16 +138,16 @@
               <EmptySpace type="unrelated" max="-2" attributes="0"/>
               <Component id="jSeparator2" min="-2" max="-2" attributes="0"/>
               <EmptySpace max="-2" attributes="0"/>
-              <Group type="103" groupAlignment="2" attributes="0">
-                  <Component id="projectPathTxt" alignment="2" min="-2" max="-2" attributes="0"/>
-                  <Component id="projectPath" alignment="2" min="-2" max="-2" attributes="0"/>
+              <Group type="103" groupAlignment="0" attributes="0">
+                  <Component id="projectPathTxt" min="-2" max="-2" attributes="0"/>
+                  <Component id="projectPath" alignment="0" min="-2" max="-2" attributes="0"/>
               </Group>
               <EmptySpace max="-2" attributes="0"/>
-              <Group type="103" groupAlignment="2" attributes="0">
-                  <Component id="buildPathTxt" alignment="2" min="-2" max="-2" attributes="0"/>
-                  <Component id="buildPath" alignment="2" min="-2" max="-2" attributes="0"/>
+              <Group type="103" groupAlignment="0" attributes="0">
+                  <Component id="buildPathTxt" min="-2" max="-2" attributes="0"/>
+                  <Component id="buildPath" min="-2" max="-2" attributes="0"/>
               </Group>
-              <EmptySpace min="-2" pref="17" max="-2" attributes="0"/>
+              <EmptySpace min="-2" pref="13" max="-2" attributes="0"/>
               <Component id="jSeparator3" min="-2" max="-2" attributes="0"/>
               <EmptySpace max="-2" attributes="0"/>
               <Group type="103" groupAlignment="3" attributes="0">
@@ -159,7 +156,7 @@
               </Group>
               <EmptySpace max="-2" attributes="0"/>
               <Component id="jSeparator4" min="-2" pref="6" max="-2" attributes="0"/>
-              <EmptySpace pref="93" max="32767" attributes="0"/>
+              <EmptySpace pref="97" max="32767" attributes="0"/>
               <Group type="103" groupAlignment="3" attributes="0">
                   <Component id="buildBtn" alignment="3" min="-2" max="-2" attributes="0"/>
                   <Component id="previewBtn" alignment="3" min="-2" max="-2" attributes="0"/>
@@ -267,6 +264,7 @@
     <Component class="javax.swing.JTextField" name="endVersion">
       <Properties>
         <Property name="text" type="java.lang.String" value="0"/>
+        <Property name="enabled" type="boolean" value="false"/>
       </Properties>
     </Component>
     <Component class="javax.swing.JLabel" name="usernameTxt">
@@ -293,7 +291,9 @@
     </Component>
     <Component class="javax.swing.JCheckBox" name="headVersion">
       <Properties>
+        <Property name="selected" type="boolean" value="true"/>
         <Property name="text" type="java.lang.String" value="&#x6700;&#x65b0;&#x7248;&#x672c;"/>
+        <Property name="enabled" type="boolean" value="false"/>
       </Properties>
       <Events>
         <EventHandler event="mouseClicked" listener="java.awt.event.MouseListener" parameters="java.awt.event.MouseEvent" handler="headVersionMouseClicked"/>

@@ -7,6 +7,8 @@
 package com.jack.findUpdate.ui;
 
 import java.io.File;
+import java.util.ArrayList;
+import java.util.List;
 
 import javax.swing.JFileChooser;
 import javax.swing.JFrame;
@@ -37,6 +39,13 @@ public class MyFileChoose extends javax.swing.JPanel {
 		chooseBtn = new javax.swing.JButton();
 
 		choosePathTxt.setEditable(false);
+		choosePathTxt
+				.addPropertyChangeListener(new java.beans.PropertyChangeListener() {
+					public void propertyChange(
+							java.beans.PropertyChangeEvent evt) {
+						choosePathTxtPropertyChange(evt);
+					}
+				});
 
 		chooseBtn.setText("\u6d4f\u89c8");
 		chooseBtn.addActionListener(new java.awt.event.ActionListener() {
@@ -77,30 +86,55 @@ public class MyFileChoose extends javax.swing.JPanel {
 	}// </editor-fold>
 	//GEN-END:initComponents
 
+	private void choosePathTxtPropertyChange(java.beans.PropertyChangeEvent evt) {
+		String selectPath = choosePathTxt.getText();
+		choosePathTxt.setText(selectPath);
+		for (AfterChooseListener afterChooseListener : afterChooseListeners) {
+			afterChooseListener.afterChoose(selectPath);
+		}
+	}
+
 	private void chooseBtnActionPerformed(java.awt.event.ActionEvent evt) {
 		JFileChooser fc = new JFileChooser();
-		if(chooseDir){
+		if (chooseDir) {
 			fc.setFileSelectionMode(JFileChooser.DIRECTORIES_ONLY);
 		}
-		if(choosePathTxt.getText()!=null && choosePathTxt.getText().trim().length()>0){
+		if (choosePathTxt.getText() != null
+				&& choosePathTxt.getText().trim().length() > 0) {
 			fc.setCurrentDirectory(new File(choosePathTxt.getText().trim()));
 		}
 		int result = fc.showOpenDialog(null);
 		if (result == JFileChooser.APPROVE_OPTION) {
-			choosePathTxt.setText(fc.getSelectedFile().getAbsolutePath());
+			String selectPath = fc.getSelectedFile().getAbsolutePath();
+			choosePathTxt.setText(selectPath);
+//			for (AfterChooseListener afterChooseListener : afterChooseListeners) {
+//				afterChooseListener.afterChoose(selectPath);
+//			}
 		}
 	}
-	
+
+	public static class AfterChooseListener {
+		public void afterChoose(String choosePath) {
+		}
+	}
+
+	private List<AfterChooseListener> afterChooseListeners = new ArrayList<AfterChooseListener>();
+
+	public void addAfterChooseListener(AfterChooseListener listener) {
+		afterChooseListeners.add(listener);
+	}
+
 	private boolean chooseDir = true;
-	public void setChooseDir(boolean chooseDir){
+
+	public void setChooseDir(boolean chooseDir) {
 		this.chooseDir = chooseDir;
 	}
 
 	public String getChoosePath() {
 		return choosePathTxt.getText();
 	}
-	
-	public void setChoosePath(String txt){
+
+	public void setChoosePath(String txt) {
 		choosePathTxt.setText(txt);
 	}
 
