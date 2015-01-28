@@ -24,50 +24,52 @@
               <EmptySpace max="-2" attributes="0"/>
               <Group type="103" groupAlignment="0" attributes="0">
                   <Group type="102" alignment="0" attributes="0">
-                      <Component id="toolPathTxt" min="-2" max="-2" attributes="0"/>
-                      <EmptySpace max="-2" attributes="0"/>
-                      <Component id="toolPath" linkSize="3" min="-2" max="-2" attributes="0"/>
-                  </Group>
-                  <Group type="102" alignment="0" attributes="0">
                       <Group type="103" groupAlignment="0" attributes="0">
                           <Component id="startVersionTxt" alignment="0" min="-2" max="-2" attributes="0"/>
                           <Component id="usernameTxt" alignment="0" min="-2" max="-2" attributes="0"/>
+                          <Component id="toolPathTxt" alignment="0" min="-2" max="-2" attributes="0"/>
                       </Group>
                       <EmptySpace max="-2" attributes="0"/>
                       <Group type="103" groupAlignment="0" attributes="0">
+                          <Component id="toolPath" linkSize="3" alignment="0" min="-2" max="-2" attributes="0"/>
                           <Group type="102" alignment="0" attributes="0">
-                              <Component id="startVersion" linkSize="1" min="-2" pref="69" max="-2" attributes="0"/>
-                              <EmptySpace type="unrelated" max="-2" attributes="0"/>
-                              <Component id="endVersionTxt" min="-2" max="-2" attributes="0"/>
+                              <Group type="103" groupAlignment="0" attributes="0">
+                                  <Group type="102" alignment="0" attributes="0">
+                                      <Component id="startVersion" linkSize="1" min="-2" pref="69" max="-2" attributes="0"/>
+                                      <EmptySpace type="unrelated" max="-2" attributes="0"/>
+                                      <Component id="endVersionTxt" min="-2" max="-2" attributes="0"/>
+                                  </Group>
+                                  <Group type="102" alignment="0" attributes="0">
+                                      <Component id="username" linkSize="1" min="-2" pref="69" max="-2" attributes="0"/>
+                                      <EmptySpace type="separate" max="-2" attributes="0"/>
+                                      <Component id="passwordTxt" min="-2" max="-2" attributes="0"/>
+                                  </Group>
+                              </Group>
+                              <EmptySpace max="-2" attributes="0"/>
+                              <Group type="103" groupAlignment="0" attributes="0">
+                                  <Group type="102" alignment="0" attributes="0">
+                                      <Component id="endVersion" linkSize="1" min="-2" pref="77" max="-2" attributes="0"/>
+                                      <EmptySpace type="unrelated" max="-2" attributes="0"/>
+                                      <Component id="headVersion" min="-2" max="-2" attributes="0"/>
+                                  </Group>
+                                  <Component id="password" linkSize="1" alignment="0" min="-2" pref="69" max="-2" attributes="0"/>
+                              </Group>
                           </Group>
-                          <Group type="102" alignment="0" attributes="0">
-                              <Component id="username" linkSize="1" min="-2" pref="69" max="-2" attributes="0"/>
-                              <EmptySpace type="separate" max="-2" attributes="0"/>
-                              <Component id="passwordTxt" min="-2" max="-2" attributes="0"/>
-                          </Group>
+                      </Group>
+                  </Group>
+                  <Group type="102" alignment="0" attributes="0">
+                      <Group type="103" groupAlignment="0" attributes="0">
+                          <Component id="projectPathTxt" alignment="0" min="-2" max="-2" attributes="0"/>
+                          <Component id="buildPathTxt" alignment="0" min="-2" max="-2" attributes="0"/>
                       </Group>
                       <EmptySpace max="-2" attributes="0"/>
                       <Group type="103" groupAlignment="0" attributes="0">
-                          <Group type="102" alignment="0" attributes="0">
-                              <Component id="endVersion" linkSize="1" min="-2" pref="77" max="-2" attributes="0"/>
-                              <EmptySpace type="unrelated" max="-2" attributes="0"/>
-                              <Component id="headVersion" min="-2" max="-2" attributes="0"/>
-                          </Group>
-                          <Component id="password" linkSize="1" alignment="0" min="-2" pref="69" max="-2" attributes="0"/>
+                          <Component id="buildPath" linkSize="3" alignment="0" min="-2" max="-2" attributes="0"/>
+                          <Component id="projectPath" linkSize="3" alignment="0" min="-2" max="-2" attributes="0"/>
                       </Group>
-                  </Group>
-                  <Group type="102" alignment="0" attributes="0">
-                      <Component id="projectPathTxt" min="-2" max="-2" attributes="0"/>
-                      <EmptySpace max="-2" attributes="0"/>
-                      <Component id="projectPath" linkSize="3" min="-2" max="-2" attributes="0"/>
-                  </Group>
-                  <Group type="102" alignment="0" attributes="0">
-                      <Component id="buildPathTxt" min="-2" max="-2" attributes="0"/>
-                      <EmptySpace max="-2" attributes="0"/>
-                      <Component id="buildPath" linkSize="3" min="-2" max="-2" attributes="0"/>
                   </Group>
               </Group>
-              <EmptySpace pref="159" max="32767" attributes="0"/>
+              <EmptySpace pref="112" max="32767" attributes="0"/>
           </Group>
           <Group type="102" alignment="0" attributes="0">
               <EmptySpace min="10" pref="10" max="10" attributes="0"/>
@@ -89,7 +91,7 @@
               <Component id="jSeparator2" pref="565" max="32767" attributes="0"/>
           </Group>
           <Group type="102" alignment="1" attributes="0">
-              <EmptySpace pref="425" max="32767" attributes="0"/>
+              <EmptySpace pref="391" max="32767" attributes="0"/>
               <Component id="previewBtn" min="-2" max="-2" attributes="0"/>
               <EmptySpace max="-2" attributes="0"/>
               <Component id="buildBtn" min="-2" max="-2" attributes="0"/>
@@ -126,7 +128,7 @@
               <EmptySpace max="-2" attributes="0"/>
               <Group type="103" groupAlignment="0" attributes="0">
                   <Component id="toolPathTxt" min="-2" max="-2" attributes="0"/>
-                  <Component id="toolPath" alignment="0" min="-2" max="-2" attributes="0"/>
+                  <Component id="toolPath" min="-2" max="-2" attributes="0"/>
               </Group>
               <EmptySpace max="-2" attributes="0"/>
               <Group type="103" groupAlignment="2" attributes="0">
@@ -171,12 +173,12 @@
     </Component>
     <Component class="javax.swing.JLabel" name="startVersionTxt">
       <Properties>
-        <Property name="text" type="java.lang.String" value="&#x5f00;&#x59cb;&#x7248;&#x672c;"/>
+        <Property name="text" type="java.lang.String" value="start version"/>
       </Properties>
     </Component>
     <Component class="javax.swing.JLabel" name="endVersionTxt">
       <Properties>
-        <Property name="text" type="java.lang.String" value="&#x7ed3;&#x675f;&#x7248;&#x672c;"/>
+        <Property name="text" type="java.lang.String" value="end version"/>
       </Properties>
     </Component>
     <Component class="javax.swing.JRadioButton" name="svnBtn">
@@ -199,21 +201,21 @@
     </Component>
     <Component class="javax.swing.JLabel" name="toolPathTxt">
       <Properties>
-        <Property name="text" type="java.lang.String" value="&#x5de5;&#x5177;&#x8def;&#x5f84;"/>
+        <Property name="text" type="java.lang.String" value="svn path"/>
       </Properties>
     </Component>
     <Component class="javax.swing.JSeparator" name="jSeparator2">
     </Component>
     <Component class="javax.swing.JLabel" name="projectPathTxt">
       <Properties>
-        <Property name="text" type="java.lang.String" value="&#x9879;&#x76ee;&#x8def;&#x5f84;"/>
+        <Property name="text" type="java.lang.String" value="project path"/>
       </Properties>
     </Component>
     <Component class="javax.swing.JSeparator" name="jSeparator3">
     </Component>
     <Component class="javax.swing.JLabel" name="buildPathTxt">
       <Properties>
-        <Property name="text" type="java.lang.String" value="&#x751f;&#x6210;&#x8def;&#x5f84;"/>
+        <Property name="text" type="java.lang.String" value="build path"/>
       </Properties>
     </Component>
     <Component class="javax.swing.JRadioButton" name="webBtn">
@@ -236,7 +238,7 @@
     </Component>
     <Component class="javax.swing.JButton" name="buildBtn">
       <Properties>
-        <Property name="text" type="java.lang.String" value="&#x751f;&#x6210;"/>
+        <Property name="text" type="java.lang.String" value="build"/>
       </Properties>
       <Events>
         <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="buildBtnActionPerformed"/>
@@ -269,19 +271,19 @@
     </Component>
     <Component class="javax.swing.JLabel" name="usernameTxt">
       <Properties>
-        <Property name="text" type="java.lang.String" value="&#x7528;&#x6237;&#x540d;"/>
+        <Property name="text" type="java.lang.String" value="username"/>
       </Properties>
     </Component>
     <Component class="javax.swing.JTextField" name="username">
     </Component>
     <Component class="javax.swing.JLabel" name="passwordTxt">
       <Properties>
-        <Property name="text" type="java.lang.String" value="&#x5bc6;&#x7801;"/>
+        <Property name="text" type="java.lang.String" value="password"/>
       </Properties>
     </Component>
     <Component class="javax.swing.JButton" name="previewBtn">
       <Properties>
-        <Property name="text" type="java.lang.String" value="&#x9884;&#x89c8;"/>
+        <Property name="text" type="java.lang.String" value="preview"/>
       </Properties>
       <Events>
         <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="previewBtnActionPerformed"/>
@@ -292,7 +294,7 @@
     <Component class="javax.swing.JCheckBox" name="headVersion">
       <Properties>
         <Property name="selected" type="boolean" value="true"/>
-        <Property name="text" type="java.lang.String" value="&#x6700;&#x65b0;&#x7248;&#x672c;"/>
+        <Property name="text" type="java.lang.String" value="newest"/>
         <Property name="enabled" type="boolean" value="false"/>
       </Properties>
       <Events>

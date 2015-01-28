@@ -42,12 +42,12 @@ public class MainPanel extends javax.swing.JPanel {
 		gitBtn.setActionCommand(gitBtn.getText());
 		webBtn.setActionCommand(webBtn.getText());
 		javaBtn.setActionCommand(javaBtn.getText());
-		buildPath.addAfterChooseListener(new AfterChooseListener(){
+		buildPath.addAfterChooseListener(new AfterChooseListener() {
 			@Override
 			public void afterChoose(String choosePath) {
 				try {
 					int sVersion = MainService.checkBaseInfo(choosePath);
-					if(sVersion != -1){
+					if (sVersion != -1) {
 						startVersion.setText(sVersion + "");
 					}
 				} catch (Exception e) {
@@ -92,9 +92,9 @@ public class MainPanel extends javax.swing.JPanel {
 		password = new javax.swing.JTextField();
 		headVersion = new javax.swing.JCheckBox();
 
-		startVersionTxt.setText("\u5f00\u59cb\u7248\u672c");
+		startVersionTxt.setText("start version");
 
-		endVersionTxt.setText("\u7ed3\u675f\u7248\u672c");
+		endVersionTxt.setText("end version");
 
 		toolTypeGroup.add(svnBtn);
 		svnBtn.setSelected(true);
@@ -104,11 +104,11 @@ public class MainPanel extends javax.swing.JPanel {
 		gitBtn.setText("GIT");
 		gitBtn.setEnabled(false);
 
-		toolPathTxt.setText("\u5de5\u5177\u8def\u5f84");
+		toolPathTxt.setText("svn path");
 
-		projectPathTxt.setText("\u9879\u76ee\u8def\u5f84");
+		projectPathTxt.setText("project path");
 
-		buildPathTxt.setText("\u751f\u6210\u8def\u5f84");
+		buildPathTxt.setText("build path");
 
 		appTypeGroup.add(webBtn);
 		webBtn.setSelected(true);
@@ -118,7 +118,7 @@ public class MainPanel extends javax.swing.JPanel {
 		javaBtn.setText("Java");
 		javaBtn.setEnabled(false);
 
-		buildBtn.setText("\u751f\u6210");
+		buildBtn.setText("build");
 		buildBtn.addActionListener(new java.awt.event.ActionListener() {
 			public void actionPerformed(java.awt.event.ActionEvent evt) {
 				buildBtnActionPerformed(evt);
@@ -134,11 +134,11 @@ public class MainPanel extends javax.swing.JPanel {
 		endVersion.setText("0");
 		endVersion.setEnabled(false);
 
-		usernameTxt.setText("\u7528\u6237\u540d");
+		usernameTxt.setText("username");
 
-		passwordTxt.setText("\u5bc6\u7801");
+		passwordTxt.setText("password");
 
-		previewBtn.setText("\u9884\u89c8");
+		previewBtn.setText("preview");
 		previewBtn.addActionListener(new java.awt.event.ActionListener() {
 			public void actionPerformed(java.awt.event.ActionEvent evt) {
 				previewBtnActionPerformed(evt);
@@ -146,7 +146,7 @@ public class MainPanel extends javax.swing.JPanel {
 		});
 
 		headVersion.setSelected(true);
-		headVersion.setText("\u6700\u65b0\u7248\u672c");
+		headVersion.setText("newest");
 		headVersion.setEnabled(false);
 		headVersion.addMouseListener(new java.awt.event.MouseAdapter() {
 			public void mouseClicked(java.awt.event.MouseEvent evt) {
@@ -171,18 +171,6 @@ public class MainPanel extends javax.swing.JPanel {
 														.addGroup(
 																layout
 																		.createSequentialGroup()
-																		.addComponent(
-																				toolPathTxt)
-																		.addPreferredGap(
-																				javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-																		.addComponent(
-																				toolPath,
-																				javax.swing.GroupLayout.PREFERRED_SIZE,
-																				javax.swing.GroupLayout.DEFAULT_SIZE,
-																				javax.swing.GroupLayout.PREFERRED_SIZE))
-														.addGroup(
-																layout
-																		.createSequentialGroup()
 																		.addGroup(
 																				layout
 																						.createParallelGroup(
@@ -190,87 +178,104 @@ public class MainPanel extends javax.swing.JPanel {
 																						.addComponent(
 																								startVersionTxt)
 																						.addComponent(
-																								usernameTxt))
-																		.addPreferredGap(
-																				javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-																		.addGroup(
-																				layout
-																						.createParallelGroup(
-																								javax.swing.GroupLayout.Alignment.LEADING)
-																						.addGroup(
-																								layout
-																										.createSequentialGroup()
-																										.addComponent(
-																												startVersion,
-																												javax.swing.GroupLayout.PREFERRED_SIZE,
-																												69,
-																												javax.swing.GroupLayout.PREFERRED_SIZE)
-																										.addPreferredGap(
-																												javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-																										.addComponent(
-																												endVersionTxt))
-																						.addGroup(
-																								layout
-																										.createSequentialGroup()
-																										.addComponent(
-																												username,
-																												javax.swing.GroupLayout.PREFERRED_SIZE,
-																												69,
-																												javax.swing.GroupLayout.PREFERRED_SIZE)
-																										.addGap(
-																												18,
-																												18,
-																												18)
-																										.addComponent(
-																												passwordTxt)))
-																		.addPreferredGap(
-																				javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-																		.addGroup(
-																				layout
-																						.createParallelGroup(
-																								javax.swing.GroupLayout.Alignment.LEADING)
-																						.addGroup(
-																								layout
-																										.createSequentialGroup()
-																										.addComponent(
-																												endVersion,
-																												javax.swing.GroupLayout.PREFERRED_SIZE,
-																												77,
-																												javax.swing.GroupLayout.PREFERRED_SIZE)
-																										.addPreferredGap(
-																												javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-																										.addComponent(
-																												headVersion))
+																								usernameTxt)
 																						.addComponent(
-																								password,
+																								toolPathTxt))
+																		.addPreferredGap(
+																				javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+																		.addGroup(
+																				layout
+																						.createParallelGroup(
+																								javax.swing.GroupLayout.Alignment.LEADING)
+																						.addComponent(
+																								toolPath,
 																								javax.swing.GroupLayout.PREFERRED_SIZE,
-																								69,
-																								javax.swing.GroupLayout.PREFERRED_SIZE)))
+																								javax.swing.GroupLayout.DEFAULT_SIZE,
+																								javax.swing.GroupLayout.PREFERRED_SIZE)
+																						.addGroup(
+																								layout
+																										.createSequentialGroup()
+																										.addGroup(
+																												layout
+																														.createParallelGroup(
+																																javax.swing.GroupLayout.Alignment.LEADING)
+																														.addGroup(
+																																layout
+																																		.createSequentialGroup()
+																																		.addComponent(
+																																				startVersion,
+																																				javax.swing.GroupLayout.PREFERRED_SIZE,
+																																				69,
+																																				javax.swing.GroupLayout.PREFERRED_SIZE)
+																																		.addPreferredGap(
+																																				javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+																																		.addComponent(
+																																				endVersionTxt))
+																														.addGroup(
+																																layout
+																																		.createSequentialGroup()
+																																		.addComponent(
+																																				username,
+																																				javax.swing.GroupLayout.PREFERRED_SIZE,
+																																				69,
+																																				javax.swing.GroupLayout.PREFERRED_SIZE)
+																																		.addGap(
+																																				18,
+																																				18,
+																																				18)
+																																		.addComponent(
+																																				passwordTxt)))
+																										.addPreferredGap(
+																												javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+																										.addGroup(
+																												layout
+																														.createParallelGroup(
+																																javax.swing.GroupLayout.Alignment.LEADING)
+																														.addGroup(
+																																layout
+																																		.createSequentialGroup()
+																																		.addComponent(
+																																				endVersion,
+																																				javax.swing.GroupLayout.PREFERRED_SIZE,
+																																				77,
+																																				javax.swing.GroupLayout.PREFERRED_SIZE)
+																																		.addPreferredGap(
+																																				javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+																																		.addComponent(
+																																				headVersion))
+																														.addComponent(
+																																password,
+																																javax.swing.GroupLayout.PREFERRED_SIZE,
+																																69,
+																																javax.swing.GroupLayout.PREFERRED_SIZE)))))
 														.addGroup(
 																layout
 																		.createSequentialGroup()
-																		.addComponent(
-																				projectPathTxt)
+																		.addGroup(
+																				layout
+																						.createParallelGroup(
+																								javax.swing.GroupLayout.Alignment.LEADING)
+																						.addComponent(
+																								projectPathTxt)
+																						.addComponent(
+																								buildPathTxt))
 																		.addPreferredGap(
 																				javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-																		.addComponent(
-																				projectPath,
-																				javax.swing.GroupLayout.PREFERRED_SIZE,
-																				javax.swing.GroupLayout.DEFAULT_SIZE,
-																				javax.swing.GroupLayout.PREFERRED_SIZE))
-														.addGroup(
-																layout
-																		.createSequentialGroup()
-																		.addComponent(
-																				buildPathTxt)
-																		.addPreferredGap(
-																				javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-																		.addComponent(
-																				buildPath,
-																				javax.swing.GroupLayout.PREFERRED_SIZE,
-																				javax.swing.GroupLayout.DEFAULT_SIZE,
-																				javax.swing.GroupLayout.PREFERRED_SIZE)))
-										.addContainerGap(159, Short.MAX_VALUE))
+																		.addGroup(
+																				layout
+																						.createParallelGroup(
+																								javax.swing.GroupLayout.Alignment.LEADING)
+																						.addComponent(
+																								buildPath,
+																								javax.swing.GroupLayout.PREFERRED_SIZE,
+																								javax.swing.GroupLayout.DEFAULT_SIZE,
+																								javax.swing.GroupLayout.PREFERRED_SIZE)
+																						.addComponent(
+																								projectPath,
+																								javax.swing.GroupLayout.PREFERRED_SIZE,
+																								javax.swing.GroupLayout.DEFAULT_SIZE,
+																								javax.swing.GroupLayout.PREFERRED_SIZE))))
+										.addContainerGap(112, Short.MAX_VALUE))
 						.addGroup(
 								layout.createSequentialGroup().addGap(10, 10,
 										10).addComponent(jSeparator4,
@@ -299,7 +304,7 @@ public class MainPanel extends javax.swing.JPanel {
 								javax.swing.GroupLayout.Alignment.TRAILING,
 								layout
 										.createSequentialGroup()
-										.addContainerGap(425, Short.MAX_VALUE)
+										.addContainerGap(391, Short.MAX_VALUE)
 										.addComponent(previewBtn)
 										.addPreferredGap(
 												javax.swing.LayoutStyle.ComponentPlacement.RELATED)
