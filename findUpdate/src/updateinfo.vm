@@ -4,6 +4,8 @@
 	<info kind="startVersion" value="$userData.startVersion"/>
 	<info kind="endVersion" value="$userData.endVersion"/>
 	#foreach( $path in $paths )
-		<info kind="modify" type="$path.modifyType" path="$path.path"/>
+		#foreach( $realPath in $path.realPaths )
+	<info kind="path" type="$path.modifyType" value="$realPath"/>
+		#end	
 	#end
 </updateinfo>

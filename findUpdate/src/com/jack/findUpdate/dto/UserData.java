@@ -33,7 +33,7 @@ public class UserData {
 		return toolPath;
 	}
 	public void setToolPath(String toolPath) {
-		this.toolPath = toolPath;
+		this.toolPath = toolPath.replaceAll("\\\\", "/");
 	}
 
 	public String getPassword() {
@@ -46,13 +46,13 @@ public class UserData {
 		return projectPath;
 	}
 	public void setProjectPath(String projectPath) {
-		this.projectPath = projectPath;
+		this.projectPath = projectPath.replaceAll("\\\\", "/");
 	}
 	public String getBuildPath() {
 		return buildPath;
 	}
 	public void setBuildPath(String buildPath) {
-		this.buildPath = buildPath;
+		this.buildPath = buildPath.replaceAll("\\\\", "/");
 	}
 	public String getAppType() {
 		return appType;

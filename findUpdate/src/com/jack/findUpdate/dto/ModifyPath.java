@@ -1,9 +1,13 @@
 package com.jack.findUpdate.dto;
 
+import java.util.ArrayList;
+import java.util.List;
+
 public class ModifyPath {
 	private String path;
 	private ModifyType modifyType;
 	private PathType pathType;
+	private List<String> realPaths = new ArrayList<String>();
 	
 	public String getPath() {
 		return path;
@@ -11,6 +15,18 @@ public class ModifyPath {
 
 	public void setPath(String path) {
 		this.path = path.replaceAll("\\\\", "/");
+	}
+
+	public List<String> getRealPaths() {
+		return realPaths;
+	}
+	
+	public String getFirstRealPath() {
+		return realPaths.get(0);
+	}
+
+	public void addRealPath(String realPath) {
+		realPaths.add(realPath);
 	}
 
 	public ModifyType getModifyType() {

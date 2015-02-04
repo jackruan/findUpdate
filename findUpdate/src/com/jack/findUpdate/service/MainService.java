@@ -80,10 +80,10 @@ public class MainService {
 		File classPathFile = new File(userData.getProjectPath() + "/.classpath");
 		String outputPath = null;
 		List<String> sourcePaths = new ArrayList<String>();
-		String projectPath = userData.getProjectPath().replaceAll("\\\\", "/") + "/";
+		String projectPath = userData.getProjectPath() + "/";
 		if(classPathFile.exists()){
 			outputPath = XmlUtil.selectSingleAttribute(classPathFile, "/classpath/classpathentry[@kind='output']/@path").getValue();
-			outputPath = userData.getProjectPath().replaceAll("\\\\", "/") + "/" + outputPath;
+			outputPath = userData.getProjectPath() + "/" + outputPath;
 			List<Attribute> attrs = XmlUtil.selectAttributeList(classPathFile, "/classpath/classpathentry[@kind='src']/@path");
 			for(Attribute attr : attrs){
 				sourcePaths.add(projectPath + attr.getValue());
@@ -96,38 +96,50 @@ public class MainService {
 		}
 		
 		// copy update file
-		List<ModifyPath> deletePaths = new ArrayList<ModifyPath>();
+//		List<ModifyPath> deletePaths = new ArrayList<ModifyPath>();
 		for (ModifyPath path : paths) {
+			String realPath = path.getPath();
+			for(String sourcePath : sourcePaths){
+				if(path.getPath().contains(sourcePath)){
+					realPath = path.getPath().replaceAll(sourcePath, outputPath);
+					break;
+				}
+			}
+			if (path.getPathType() == ModifyPath.PathType.FILE){
+				if (path.getPath().endsWith(".java")) {
+					realPath = realPath.replace(".java", ".class");
+					String dir = realPath.substring(0, realPath.lastIndexOf("/"));
+					String targetClass = realPath.substring(realPath.lastIndexOf("/") + 1);
+					String[] allClasses = FileUtil.findRelateClass(dir, targetClass.replace(".class", ""));
+					for(String c : allClasses){
+						path.addRealPath(dir.replace(userData.getProjectPath(), "") + "/" + c);//all java files
+					}
+				}else{
+					path.addRealPath(realPath.replace(userData.getProjectPath(), ""));//not java file
+				}
+			}else{
+				path.addRealPath(realPath.replace(userData.getProjectPath(), ""));//dir
+			}
+			
+			
 			if (path.getModifyType() == ModifyPath.ModifyType.ADD
 					|| path.getModifyType() == ModifyPath.ModifyType.MODIFY) {
-				String newPath = path.getPath();
-				for(String sourcePath : sourcePaths){
-					if(path.getPath().contains(sourcePath)){
-						newPath = path.getPath().replaceAll(sourcePath, outputPath);
-						break;
-					}
-				}
+
 				if (path.getPathType() == ModifyPath.PathType.DIR) {
-					new File(path.getPath()).mkdirs();
+					//new File(path.getPath()).mkdirs();
 				} else if (path.getPathType() == ModifyPath.PathType.FILE) {
-					if (path.getPath().endsWith(".java")) {
-						String temp = newPath.replace(".java", ".class");
-						String dir = temp.substring(0, temp.lastIndexOf("/"));
-						String targetClass = temp.substring(temp.lastIndexOf("/") + 1);
-						String[] allClasses = FileUtil.findRelateClass(dir, targetClass.replace(".class", ""));
-						for(String c : allClasses){
-							String temp2 = dir + "/" + c;
-							FileUtil.copyFile(new File(temp2), new File(destDir + temp2.replace(userData.getProjectPath().replaceAll("\\\\", "/"), "")));
+					if (path.getPath().endsWith(".java")) {//java files
+						List<String> realPaths = path.getRealPaths();
+						for(String temp : realPaths){
+							FileUtil.copyFile(new File(userData.getProjectPath() + temp), new File(destDir + temp));
 						}
 					} else {
 						FileUtil
 								.copyFile(
-										new File(newPath),
-										new File(destDir + newPath.replace(userData.getProjectPath().replaceAll("\\\\", "/"), "")));
+										new File(userData.getProjectPath() + path.getFirstRealPath()),
+										new File(destDir + path.getFirstRealPath()));
 					}
 				}
-			} else if (path.getModifyType() == ModifyPath.ModifyType.REMOVE) {
-				deletePaths.add(path);
 			}
 		}
 //		String srcDir = destDir + "/src";
@@ -164,6 +176,7 @@ public class MainService {
 
 	private static void saveUpdateInfo(List<ModifyPath> paths, String dateStr,
 			UserData userData, String updateDir) throws IOException {
+
 		VelocityContext context = new VelocityContext();
 		context.put("paths", paths);
 		context.put("dateStr", dateStr);
